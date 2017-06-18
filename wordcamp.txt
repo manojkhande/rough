@@ -1,0 +1,109 @@
+ apt-get install subversion 
+Whenever you write test write it for success and failer.
+https://pippinsplugins.com/unit-tests-for-wordpress-plugins-the-factory/
+http://wordpress.tv/2011/08/20/nikolay-bachiyski-unit-testing-will-change-your-life/
+
+---------------
+Hi everyone, i am manoj khande and today i will giv you traing for plugine unit testing.
+before the pluine testing you should know what is unit testing and why it is important.
+
+
+Why Unit testing is important:
+
+It tests the smallest unit of functionality. From a developer's point of view, its focus is to make sure one function does what it is supposed to do. Thus it should have minimum or no dependence on other function/class. Unit testing should be as simple as possible. 
+
+------
+What is PHP Unit (https://phpunit.de):
+PHPUnit is a unit testing framework for the PHP programming language.
+PHPUnit is currently the most popular PHP unit testing framework. Besides providing features such as mocking objects, it provides code coverage analysis, logging and tons of other powerful features. 
+
+Lets take one example:
+
+Here we have function add, which returns addition of two numbers.
+to test this function we create CalulatorTest.php and include this file in it.
+
+First step is to create class which extend the parent class PHPUnit_Framework_TestCase
+
+-- setUp() is called before each test runs. Keep in mind, it runs before each test, which means, if you have another test function. It will run setUp() before it too.
+-- similar to setUp(), tearDown() is called after each test finishes.
+
+--  testAdd() is the test function for add function. PHPUnit will recognize all functions prefixed with test as a test function and run it automatically. This function is actually very straightforward, we first call Calculator.add function to calculate the value of 1 plus 2. Then we check if it returns correct value by using PHPUnit function assertEquals.
+
+Last part of job is to run PHPUnit and make sure it passes all tests. Navigate to the folder where you have created the test file and run commands below from your terminal:
+
+
+Slides:
+Say Hello to testing 
+What is unit testing?
+Why Unit testing is important:
+
+Unit testing Set up
+	PHP
+	PHPUNIT
+	Wp-cli
+
+Writing your first test
+
+Unit Testing your Plugin
+
+Commands
+	wp scaffold plugin-tests restrict-content-pro
+
+The new folders / files created:
+
+    bin/
+        install-wp-tests.sh
+    tests/
+        bootstrap.php
+        test-sample.php
+    phpunit.xml
+    .travis.yml
+
+Commands:
+	bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
+
+Writing your first test
+
+
+factorys
+https://codesymphony.co/writing-wordpress-plugin-unit-tests/
+
+Ajax testing
+
+-->
+Why testing:
+WOordpress testing problem?
+
+
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+Let me start by saying that the init action is called when WordPress is loaded, before the tests are run. So it you are having your plugin/theme loaded with WordPress (by hooking into muplugins_loaded, for example), the register_my_type() method should be getting called, if your constructor is being called before init. (If you aren't loading your plugin that way, have a look at this tutorial.)
+
+So in your unit tests you should be able to do this:
+
+$this->assertTrue( post_type_exists( 'my_post_type' ) );
+
+You could also use get_post_type() to check that the post type was registered with the correct arguments. (This is the same sort of thing I do to check that my shortcodes are registered.)
+
+I wouldn't worry about trying to test that the method was called, although you could check the list of actions in $wp_actions to see if it was hooked up properly. You could also set a class property as a flag when it is called, but I really think all of that's overkill. When it comes to things hooked to actions like init, especially a function like this which only needs to run once, functional tests are your best bet. Check that they've done what they're supposed to do, rather than focusing on trying to test a single unit like whether the method was called.
+
+That said, you could also test that the method registers the post type by deregistering the post type and manually calling the method. WordPress doesn't appear to provide a deregister_post_type() function, so you'd have to mess with the $wp_post_types global directly. You could delete your post type from that and then call your method and check if it is registered again.
+
+
+What problems you face while doin testing.
+If you see every time it take lots of time to execute the tests. because every time it create new set up.  
+
+git tag v1.4-lw
+git checkout -b
+===================================================================
+Git clone 
+
+php wp-cli.phar scaffold plugin-tests wordcamp
+
+explain class WP_UnitTestCase and sample-test.php
+
+git pull
