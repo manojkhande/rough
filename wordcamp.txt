@@ -7,16 +7,34 @@ http://wordpress.tv/2011/08/20/nikolay-bachiyski-unit-testing-will-change-your-l
 Hi everyone, i am manoj khande and today i will giv you traing for plugine unit testing.
 before the pluine testing you should know what is unit testing and why it is important.
 
+What is PHP Unit (https://phpunit.de):
+    PHPUnit is a unit testing framework for the PHP programming language.
+    PHPUnit is currently the most popular PHP unit testing framework. Besides providing features such as mocking objects, it provides code coverage analysis, logging and tons of other powerful features. 
+    It’s No Fun
+    The final reason why developers don’t like writing tests is that it’s just not much fun to write them. Developers, by their nature, want to solve problems. Writing code is like forming something out of nothing, creating order out of chaos to make something useful. As a result, they see writing tests as boring—a task they might get to one of these days if they have time after the real work is done. 
+
 
 Why Unit testing is important:
 
-It tests the smallest unit of functionality. From a developer's point of view, its focus is to make sure one function does what it is supposed to do. Thus it should have minimum or no dependence on other function/class. Unit testing should be as simple as possible. 
+    There’s No Need to Test: My Code Already Works!
+    Another common statement you hear from developers about writing up a set of tests is that the application works, so there’s no real need to test it. They know the application, and they know right where to drop in and fix a bug, sometimes in seconds. But drop a shiny new developer into the cubicle next to them, and you might start to see why those tests would be a good idea. Without them, the newbie could go changing code without a care in the world, and break who knows what. With a repeatable test run, some of those bugs could be avoided.
 
+    It tests the smallest unit of functionality. From a developer's point of view, its focus is to make sure one function does what it is supposed to do. Thus it should have minimum or no dependence on other function/class. Unit testing should be as simple as possible. 
+
+Writing a First-test Case:
+    With PHPUnit, the most basic thing you’ll write is a test case. A test case is just a term for a class with several different tests all related to the same functionality. There are a few rules you’ll need to worry about when writing your cases so that they’ll work with PHPUnit:
+
+    Most often, you’ll want to have your test class extend the PHPUnit_Framework_TestCase class. This gives you access to built-in functionality like the setUp() and tearDown() methods for your tests.
+    The name of the test class needs to mimic the name of the class you’re testing. For example, to test RemoteConnect, you’d use RemoteConnectTest.
+    When you create the test methods, you need to always start them with “test” (as in testDoesLikeWaffles(). The methods need to be public. You can have private methods in your tests, but they won’t be run as tests by PHPUnit.
+    The test methods will never receive any parameters. When you write your tests, you need to make them as self-contained as possible, pulling in what they need themselves. This can be very frustrating sometimes, but it leads to cleaner, more effective tests.
 ------
-What is PHP Unit (https://phpunit.de):
-PHPUnit is a unit testing framework for the PHP programming language.
-PHPUnit is currently the most popular PHP unit testing framework. Besides providing features such as mocking objects, it provides code coverage analysis, logging and tons of other powerful features. 
+Git clone https://github.com/manojkhande/phpunit.git
+    You’ll notice that the class extends the base PHPUnit test case, so a lot of excellent features come along with it. Those first two methods—setUp and tearDown—are examples of this kind of built-in functionality. They are helper functions that are executed as part of the normal test run. They’re run before all the tests, and after they’re all done, respectively. Despite being handy, we won’t worry about them yet. The real focus is our testConnectionIsValid method. Our method sets up our environment by creating a new instance of our RemoteConnect class, and calls the connectToServer on it.
 
+    Now, on to the real business of our test. See that assertTrue in there? That’s one of PHPUnit’s helper functions, of which there are quite a few. assertTrue is the simplest assertion: all it does is check to see if a Boolean expression is true. Other helper functions can test for object properties, file existence, the presence of a given key in an array, or a match of a value to a regular expression, to name just a few. In this case, we want to be sure that the connectToServer result isn’t false—that would mean that our connection had failed for some reason.
+Run:
+    For each test that’s run, you’ll either see a period (.) if it’s successful (as above), an “F” if there’s a failure, an “I” if the test is marked as incomplete, or an “S” if it’s been marked as skipped.
 Lets take one example:
 
 Here we have function add, which returns addition of two numbers.
@@ -107,3 +125,6 @@ php wp-cli.phar scaffold plugin-tests wordcamp
 explain class WP_UnitTestCase and sample-test.php
 
 git pull
+
+
+git checkout tags/5
