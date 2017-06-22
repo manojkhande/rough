@@ -8,7 +8,7 @@ so koi bata sakta hai what is unit testing....
 
 What is PHP Unit (https://phpunit.de):
 
-    - Unit Testing is a level of software testing where individual units/ components of a software are tested.
+    - Unit Testing is a level of software  where individual units/ components of a software are tested.
     Wordcamp venue example 
     - The purpose is to validate that each unit of the software performs as designed. A unit is the smallest testable part of software. It usually has one or a few inputs and usually a single output.
     - PHPUnit is a unit testing framework for the PHP programming language.
@@ -18,7 +18,7 @@ What is PHP Unit (https://phpunit.de):
     Medical examination...
 
 ------------------------------
-Why Unit testing is important:
+Why Unit testing itestings important:
 
     -There’s No Need to Test: My Code Already Works!
         Another common statement you hear from developers about writing up a set of tests is that the application works, so there’s no real need to test it.
@@ -50,6 +50,27 @@ Assertion:
     - we asserted that true will assert to true ( if (true == true) ). There is no magic here, what you see is what you get with assertions.
     - If we assert that false is true ( if (false == true) ), we would get a failing test:
  -------------
+ Run:
+    For each test that’s run, you’ll either see a period (.) if it’s successful (as above), an “F” if there’s a failure, an “I” if the test is marked as incomplete, or an “S” if it’s been marked as skipped.
+-------
+wp scaffold
+	we need to instruct WP-CLI to create the initial unit test files for us using this command.
+	This will generate all of the files needed for our unit tests. If you now navigate to your plugin’s folder and type ls -l, you will see several new files and folders added.
+--
+bash:
+	this will create temporary wordpress set up ans which include. here you need to provide your data base details and the wordpress version for which you want to run the tests.
+---
+xml:
+	When you run the phpunit command from that directory, it will look for that file, and read the configuration from it. You can start with the following configuration:
+
+	This configuration will load the /bootstrap.php file that we will create in a moment. It will also load all the .php files in the directory that begin with test-. Those will be your testcases.
+bootstrap:
+	-This file needs to manually load your plugin when the tests are run. The plugin needs to be loaded manually because it won’t be active on the WordPress install (no plugins will — remember this is a test environment ie. different set up, we are not using current set up becoz if we want to test for different version we can add it here in bash command).
+--
+WP_UnitTestCase
+
+	When you are writing your tests, don’t extend the PHPUnit_Framework_TestCase class as shown in the PHPUnit docs. Instead, use WordPress’s own extension of this class included in the testing suite, called WP_UnitTestCase. It is defined in includes/testcase.php, and offers extra functionality to help you write your tests more easily.
+ -------
 Set Up and Tear Down #
 
     - One of the great things about using the WP_UnitTestCase class as a parent for your test cases, is that it will clean up everything before your test is run, so that it won’t be thrown off by leftovers from other tests. It does this using the setUp() and tearDown() methods which are automatically called by PHPUnit before and after each test method is run, respectively. This is great, and will save you hours of debugging if you remember one important thing: Whenever you need to implement these methods in your child class, be sure to call parent::setUp() and parent::tearDown() at the top of each function, respectively. If you don’t, the sky may fall on your head.
