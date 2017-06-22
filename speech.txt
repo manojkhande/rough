@@ -1,0 +1,102 @@
+Hi everyone,
+I am manoj khande. Currenly worki in sanisoft technologies. As a wordpress developesr i have developed many plugins. and i am here to teach you how to UNIT TESTING YOUR PLUGINS.
+
+So here we go go..
+before plugin testing, you should know what is unit testing, why it is important, and how to do unit testing.
+
+so koi bata sakta hai what is unit testing....
+
+What is PHP Unit (https://phpunit.de):
+
+    - Unit Testing is a level of software testing where individual units/ components of a software are tested.
+    Wordcamp venue example 
+    - The purpose is to validate that each unit of the software performs as designed. A unit is the smallest testable part of software. It usually has one or a few inputs and usually a single output.
+    - PHPUnit is a unit testing framework for the PHP programming language.
+    - It also provides code coverage analysis, logging and tons of other powerful features. 
+
+    Real life example....
+    Medical examination...
+
+------------------------------
+Why Unit testing is important:
+
+    -There’s No Need to Test: My Code Already Works!
+        Another common statement you hear from developers about writing up a set of tests is that the application works, so there’s no real need to test it.
+        - They know the application, and they know right where to drop in and fix a bug, sometimes in seconds.
+        - But drop a shiny new developer into the cubicle next to them, and you might start to see why those tests would be a good idea. Without them, the newbie could go changing code without a care in the world, and break who knows what. With a repeatable test run, some of those bugs could be avoided.
+
+    - It’s No Fun
+        The final reason why developers don’t like writing tests is that it’s just not much fun to write them. Developers, by their nature, want to solve problems. Writing code is like forming something out of nothing, creating order out of chaos to make something useful. As a result, they see writing tests as boring—a task they might get to one of these days if they have time after the real work is done. 
+
+    Real time example?????
+
+    It tests the smallest unit of functionality. From a developer's point of view, its focus is to make sure one function does what it is supposed to do. Thus it should have minimum or no dependence on other function/class. Unit testing should be as simple as possible. 
+-----------------------------------------
+Writing a First-test Case:
+    With PHPUnit, the most basic thing you’ll write is a test case. A test case is just a term for a class with several different tests all related to the same functionality. There are a few rules you’ll need to worry about when writing your cases so that they’ll work with PHPUnit:
+
+    Most often, you’ll want to have your test class extend the PHPUnit_Framework_TestCase class. This gives you access to built-in functionality like the setUp() and tearDown() methods for your tests.
+    The name of the test class needs to mimic the name of the class you’re testing. For example, to test RemoteConnect, you’d use RemoteConnectTest.
+    When you create the test methods, you need to always start them with “test” (as in testDoesLikeWaffles(). The methods need to be public. You can have private methods in your tests, but they won’t be run as tests by PHPUnit.
+    The test methods will never receive any parameters. When you write your tests, you need to make them as self-contained as possible, pulling in what they need themselves. This can be very frustrating sometimes, but it leads to cleaner, more effective tests.
+------
+Git clone https://github.com/manojkhande/phpunit.git
+    You’ll notice that the class extends the base PHPUnit test case, so a lot of excellent features come along with it. Those first two methods—setUp and tearDown—are examples of this kind of built-in functionality. They are helper functions that are executed as part of the normal test run. They’re run before all the tests, and after they’re all done, respectively. Despite being handy, we won’t worry about them yet. The real focus is our testConnectionIsValid method. Our method sets up our environment by creating a new instance of our RemoteConnect class, and calls the connectToServer on it.
+
+    Now, on to the real business of our test. See that assertTrue in there? That’s one of PHPUnit’s helper functions, of which there are quite a few. assertTrue is the simplest assertion: all it does is check to see if a Boolean expression is true. Other helper functions can test for object properties, file existence, the presence of a given key in an array, or a match of a value to a regular expression, to name just a few. In this case, we want to be sure that the connectToServer result isn’t false—that would mean that our connection had failed for some reason.
+------------------
+Assertion:
+    - One of the advantages of using WP_UnitTestCase is its factories. These can be accessed through the factory member variable. 
+    - we asserted that true will assert to true ( if (true == true) ). There is no magic here, what you see is what you get with assertions.
+    - If we assert that false is true ( if (false == true) ), we would get a failing test:
+ -------------
+Set Up and Tear Down #
+
+    - One of the great things about using the WP_UnitTestCase class as a parent for your test cases, is that it will clean up everything before your test is run, so that it won’t be thrown off by leftovers from other tests. It does this using the setUp() and tearDown() methods which are automatically called by PHPUnit before and after each test method is run, respectively. This is great, and will save you hours of debugging if you remember one important thing: Whenever you need to implement these methods in your child class, be sure to call parent::setUp() and parent::tearDown() at the top of each function, respectively. If you don’t, the sky may fall on your head.
+
+    - This automated cleanup means that you generally don’t need to worry about cleaning things up, either before or after your tests. Just test away, and WP_UnitTestCase will clean up after you. For example, if you add an option in the test, you don’t need to delete it afterward. In the tearDown(), WP_UnitTestCase performs a ROLLBACK query, and in setUp(), the caches are flushed.
+
+
+
+Run:
+    For each test that’s run, you’ll either see a period (.) if it’s successful (as above), an “F” if there’s a failure, an “I” if the test is marked as incomplete, or an “S” if it’s been marked as skipped.
+Lets take one example:
+
+Here we have function add, which returns addition of two numbers.
+to test this function we create CalulatorTest.php and include this file in it.
+
+First step is to create class which extend the parent class PHPUnit_Framework_TestCase
+
+-- setUp() is called before each test runs. Keep in mind, it runs before each test, which means, if you have another test function. It will run setUp() before it too.
+-- similar to setUp(), tearDown() is called after each test finishes.
+
+--  testAdd() is the test function for add function. PHPUnit will recognize all functions prefixed with test as a test function and run it automatically. This function is actually very straightforward, we first call Calculator.add function to calculate the value of 1 plus 2. Then we check if it returns correct value by using PHPUnit function assertEquals.
+
+Last part of job is to run PHPUnit and make sure it passes all tests. Navigate to the folder where you have created the test file and run commands below from your terminal:
+
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+Let me start by saying that the init action is called when WordPress is loaded, before the tests are run. So it you are having your plugin/theme loaded with WordPress (by hooking into muplugins_loaded, for example), the register_my_type() method should be getting called, if your constructor is being called before init. (If you aren't loading your plugin that way, have a look at this tutorial.)
+
+So in your unit tests you should be able to do this:
+
+$this->assertTrue( post_type_exists( 'my_post_type' ) );
+
+You could also use get_post_type() to check that the post type was registered with the correct arguments. (This is the same sort of thing I do to check that my shortcodes are registered.)
+
+I wouldn't worry about trying to test that the method was called, although you could check the list of actions in $wp_actions to see if it was hooked up properly. You could also set a class property as a flag when it is called, but I really think all of that's overkill. When it comes to things hooked to actions like init, especially a function like this which only needs to run once, functional tests are your best bet. Check that they've done what they're supposed to do, rather than focusing on trying to test a single unit like whether the method was called.
+
+That said, you could also test that the method registers the post type by deregistering the post type and manually calling the method. WordPress doesn't appear to provide a deregister_post_type() function, so you'd have to mess with the $wp_post_types global directly. You could delete your post type from that and then call your method and check if it is registered again.
+
+
+What problems you face while doin testing.
+If you see every time it take lots of time to execute the tests. because every time it create new set up.  
+
+git tag v1.4-lw
+git checkout -b
+===================================================================
+
