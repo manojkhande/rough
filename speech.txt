@@ -14,13 +14,12 @@ What is PHP Unit (https://phpunit.de):
     - PHPUnit is a unit testing framework for the PHP programming language.
     - It also provides code coverage analysis, logging and tons of other powerful features. 
 
-    Real life example....
-    Medical examination...
+    
 
 ------------------------------
 Why Unit testing itestings important:
 
-    -There’s No Need to Test: My Code Already Works!
+    - There’s No Need to Test: My Code Already Works!
         Another common statement you hear from developers about writing up a set of tests is that the application works, so there’s no real need to test it.
         - They know the application, and they know right where to drop in and fix a bug, sometimes in seconds.
         - But drop a shiny new developer into the cubicle next to them, and you might start to see why those tests would be a good idea. Without them, the newbie could go changing code without a care in the world, and break who knows what. With a repeatable test run, some of those bugs could be avoided.

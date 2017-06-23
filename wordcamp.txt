@@ -1,4 +1,4 @@
- apt-get install subversion 
+apt-get install subversion 
 Whenever you write test write it for success and failer.
 https://pippinsplugins.com/unit-tests-for-wordpress-plugins-the-factory/
 http://wordpress.tv/2011/08/20/nikolay-bachiyski-unit-testing-will-change-your-life/
